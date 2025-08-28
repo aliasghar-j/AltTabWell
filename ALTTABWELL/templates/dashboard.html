@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - AltTabWell{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Your Wellness Dashboard</h1>
+        <p class="lead">Track your nutrition and activity progress</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">Calorie Intake</div>
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="foodTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" type="button" role="tab" aria-controls="search" aria-selected="true">Search Food</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab" aria-controls="upload" aria-selected="false">Upload Image</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content mt-3" id="foodTabsContent">
+                    <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab">
+                        <form method="post" action="{{ url_for('search_food') }}">
+                            <div class="mb-3">
+                                <label for="food_query" class="form-label">Search for Food</label>
+                                <input type="text" class="form-control" id="food_query" name="food_query" placeholder="e.g., apple, chicken breast, pasta">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="upload-tab">
+                        <form method="post" enctype="multipart/form-data" action="{{ url_for('upload_food') }}">
+                            <div class="mb-3">
+                                <label for="food_image" class="form-label">Food Image</label>
+                                <input class="form-control" type="file" id="food_image" name="food_image">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Analyze Food</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h5>Today's Calories: <span class="text-primary">0</span></h5>
+                </div>
+                
+                {% if nutrition_data %}
+                <div class="mt-3">
+                    <h5>Nutrition Results:</h5>
+                    <div class="list-group">
+                        {% if nutrition_data is iterable and nutrition_data is not string %}
+                            {% for food in nutrition_data %}
+                                <div class="list-group-item">
+                                    <h6>{{ food.food_name }}</h6>
+                                    <p class="mb-1">{{ food.food_description }}</p>
+                                    <small>Calories: {{ food.food_description.split('|')[0].strip() if '|' in food.food_description else 'N/A' }}</small>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="list-group-item">
+                                <h6>{{ nutrition_data.food_name }}</h6>
+                                <p class="mb-1">{{ nutrition_data.food_description }}</p>
+                                <small>Calories: {{ nutrition_data.food_description.split('|')[0].strip() if '|' in nutrition_data.food_description else 'N/A' }}</small>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">Step Counter</div>
+            <div class="card-body">
+                <h5>Today's Steps: <span class="text-primary">0</span></h5>
+                <div class="progress mt-2">
+                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                </div>
+                <p class="mt-2">Goal: 10,000 steps</p>
+                <button class="btn btn-outline-primary">Update Steps</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">Weekly Progress</div>
+            <div class="card-body">
+                <div class="placeholder-chart" style="height: 300px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+                    <p class="text-muted">Looker charts will be displayed here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

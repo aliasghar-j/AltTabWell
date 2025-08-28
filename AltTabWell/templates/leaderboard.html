@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Leaderboard - AltTabWell{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Wellness Leaderboard</h1>
+        <p class="lead">See how your department ranks in wellness activities</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">Department Step Challenge</div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Department</th>
+                            <th>Total Steps</th>
+                            <th>Avg Steps/Person</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Marketing</td>
+                            <td>458,921</td>
+                            <td>8,542</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>IT</td>
+                            <td>412,654</td>
+                            <td>7,845</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Operations</td>
+                            <td>387,412</td>
+                            <td>7,321</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Finance</td>
+                            <td>342,876</td>
+                            <td>6,857</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Human Resources</td>
+                            <td>321,543</td>
+                            <td>6,431</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">Individual Leaders</div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Steps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Jane Smith</td>
+                            <td>Marketing</td>
+                            <td>12,543</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>John Doe</td>
+                            <td>IT</td>
+                            <td>11,876</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Emily Johnson</td>
+                            <td>Operations</td>
+                            <td>10,932</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Michael Brown</td>
+                            <td>Finance</td>
+                            <td>10,654</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Sarah Wilson</td>
+                            <td>Human Resources</td>
+                            <td>9,876</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

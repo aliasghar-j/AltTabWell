@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - AltTabWell{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <section class="hero mb-4">
+            <div class="hero-inner text-center">
+                <h1 class="display-6 mb-2">AltTabWell</h1>
+                {% if quote %}
+                <blockquote class="hero-quote">
+                    “{{ quote.text }}”
+                    <footer class="hero-quote-author">— {{ quote.author }}</footer>
+                </blockquote>
+                {% endif %}
+            </div>
+        </section>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Department Step Challenge</div>
+                    <div class="card-body">
+                        <canvas id="deptChart" height="220"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Top Individuals</div>
+                    <div class="card-body">
+                        <canvas id="indChart" height="220"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a class="btn btn-primary" href="{{ url_for('dashboard') }}">Open Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Sample leaderboard data (sync with leaderboard page for now)
+    const deptLabels = ["Marketing", "IT", "Operations", "Finance", "HR"];
+    const deptTotals = [458921, 412654, 387412, 342876, 321543];
+
+    const indLabels = ["Jane Smith", "John Doe", "Emily Johnson", "Michael Brown", "Sarah Wilson"];
+    const indSteps = [12543, 11876, 10932, 10654, 9876];
+
+    const primary = getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim() || '#0d6efd';
+    const muted = '#adb5bd';
+
+    const deptCtx = document.getElementById('deptChart');
+    if (deptCtx && window.Chart) {
+        new Chart(deptCtx, {
+            type: 'bar',
+            data: {
+                labels: deptLabels,
+                datasets: [{
+                    label: 'Total Steps',
+                    data: deptTotals,
+                    backgroundColor: primary,
+                    borderRadius: 6,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: muted }, ticks: { callback: (v) => v.toLocaleString() } }
+                }
+            }
+        });
+    }
+
+    const indCtx = document.getElementById('indChart');
+    if (indCtx && window.Chart) {
+        new Chart(indCtx, {
+            type: 'line',
+            data: {
+                labels: indLabels,
+                datasets: [{
+                    label: 'Steps',
+                    data: indSteps,
+                    borderColor: primary,
+                    backgroundColor: primary + '22',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 3,
+                    pointBackgroundColor: primary
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: muted }, ticks: { callback: (v) => v.toLocaleString() } }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}
